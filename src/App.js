@@ -190,8 +190,8 @@ export default function Page() {
       TmpPlayedDice[selectedDie].x = x;
       TmpPlayedDice[selectedDie].y = y;
       if (TmpPlayedSquares[x][y].idx >= 0) {
-        TmpPlayedDice[TmpPlayedSquares[x][y]].x = -1;
-        TmpPlayedDice[TmpPlayedSquares[x][y]].y = -1;
+        TmpPlayedDice[TmpPlayedSquares[x][y].idx].x = -1;
+        TmpPlayedDice[TmpPlayedSquares[x][y].idx].y = -1;
       }
       TmpPlayedSquares[x][y].idx = selectedDie;
       TmpPlayedSquares[x][y].val = curDice[selectedDie];
