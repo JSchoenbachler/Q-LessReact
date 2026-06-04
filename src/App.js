@@ -6,30 +6,120 @@ export default function Page() {
   const [selectedDie, setSelectedDie] = useState(-1);
   const [selectedSquare, setSelectedSquare] = useState(-1);
   const defaultPlayedDice = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
+    { x: -1, y: -1 },
   ];
   const [playedDice, setPlayedDice] = useState(defaultPlayedDice);
   const defaultPlayedSquares = [
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
+    [
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+      { idx: -1, val: "" },
+    ],
   ];
   const [playedSquares, setPlayedSquares] = useState(defaultPlayedSquares);
   function GetNewDiceValues() {
@@ -49,13 +139,6 @@ export default function Page() {
     setCurDice(GetNewDiceValues());
     ClearBoard();
   }
-  function GetSquareValueFromPlayedDice(x, y) {
-    if (playedSquares[x][y] < 0) {
-      return "";
-    } else {
-      return curDice[playedSquares[x][y]];
-    }
-  }
   function LetterButton({ diceIdx, children }) {
     return (
       <button
@@ -72,40 +155,46 @@ export default function Page() {
   function SquareButton({ x, y }) {
     return (
       <button
-        className={playedSquares[x][y] < 0 ? "square" : "square"}
-        disabled={selectedDie < 0 && playedSquares[x][y] < 0}
+        className={playedSquares[x][y].idx < 0 ? "square" : "square"}
+        disabled={selectedDie < 0 && playedSquares[x][y].idx < 0}
         onClick={() => {
           PlayDieInSquare(x, y);
         }}
       >
-        {GetSquareValueFromPlayedDice(x, y)}
+        {playedSquares[x][y].val}
       </button>
     );
   }
   function PlayDieInSquare(x, y) {
-    TmpPlayedSquares = playedSquares;
-    TmpPlayedDice = playedDice;
-    if (selectedDie < 0 && TmpPlayedSquares[x][y] >= 0) {
-      TmpPlayedDice[TmpPlayedSquares[x][y]] = false;
-      TmpPlayedSquares[x][y] = selectedDie;
+    TmpPlayedSquares = JSON.parse(JSON.stringify(playedSquares));
+    TmpPlayedDice = JSON.parse(JSON.stringify(playedDice));
+    if (selectedDie < 0 && TmpPlayedSquares[x][y].idx >= 0) {
+      TmpPlayedDice[TmpPlayedSquares[x][y].idx].x = -1;
+      TmpPlayedDice[TmpPlayedSquares[x][y].idx].y = -1;
+      TmpPlayedSquares[x][y].idx = -1;
+      TmpPlayedSquares[x][y].val = "";
     } else {
       if (TmpPlayedDice[selectedDie]) {
         for (let i = 0; i < 9; i++) {
           for (let j = 0; j < 9; j++) {
             if (TmpPlayedSquares[i][j] == selectedDie) {
-              TmpPlayedSquares[i][j] = -1;
+              TmpPlayedSquares[x][y].idx = -1;
+              TmpPlayedSquares[x][y].val = "";
             }
           }
         }
       }
-      TmpPlayedDice[selectedDie] = true;
+      TmpPlayedDice[selectedDie].x = x;
+      TmpPlayedDice[selectedDie].y = y;
       if (TmpPlayedSquares[x][y] >= 0) {
-        TmpPlayedDice[TmpPlayedSquares[x][y]] = false;
+        TmpPlayedDice[TmpPlayedSquares[x][y]].x = -1;
+        TmpPlayedDice[TmpPlayedSquares[x][y]].y = -1;
       }
-      TmpPlayedSquares[x][y] = selectedDie;
+      TmpPlayedSquares[x][y].idx = selectedDie;
+      TmpPlayedSquares[x][y].val = curDice[selectedDie];
+      setSelectedDie(-1);
     }
 
-    setSelectedDie(-1);
     setPlayedDice(TmpPlayedDice);
     setPlayedSquares(TmpPlayedSquares);
   }
@@ -113,7 +202,7 @@ export default function Page() {
     return selectedDie >= 0 || TmpPlayedSquares[x][y] >= 0;
   }
   function IsPlayed(diceIdx) {
-    return playedDice[diceIdx];
+    return playedDice[diceIdx].x >= 0 && playedDice[diceIdx].y >= 0;
   }
   function CurrentLetters() {
     return (
