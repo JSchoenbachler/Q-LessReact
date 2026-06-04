@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Q-LessReact/static/css/main.4190511b.css",
+    "main.js": "/Q-LessReact/static/js/main.b177221f.js",
+    "index.html": "/Q-LessReact/index.html",
+    "main.4190511b.css.map": "/Q-LessReact/static/css/main.4190511b.css.map",
+    "main.b177221f.js.map": "/Q-LessReact/static/js/main.b177221f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4190511b.css",
+    "static/js/main.b177221f.js"
+  ]
+}
