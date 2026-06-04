@@ -33,9 +33,9 @@ export default function Page() {
   ];
   const [playedSquares, setPlayedSquares] = useState(defaultPlayedSquares);
   function GetNewDiceValues() {
-    NewCurDice = [];
+    let NewCurDice = [];
     for (let i = 0; i < 12; i++) {
-      RandomNum = randomNumberInRange(0, 5);
+      let RandomNum = randomNumberInRange(0, 5);
       NewCurDice[i] = dice[i][RandomNum];
     }
     return NewCurDice;
@@ -83,8 +83,8 @@ export default function Page() {
     );
   }
   function PlayDieInSquare(x, y) {
-    TmpPlayedSquares = playedSquares;
-    TmpPlayedDice = playedDice;
+    let TmpPlayedSquares = playedSquares;
+    let TmpPlayedDice = playedDice;
     if (selectedDie < 0 && TmpPlayedSquares[x][y] >= 0) {
       TmpPlayedDice[TmpPlayedSquares[x][y]] = false;
       TmpPlayedSquares[x][y] = selectedDie;
