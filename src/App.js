@@ -5,6 +5,7 @@ export default function Page() {
   const [curDice, setCurDice] = useState(GetNewDiceValues());
   const [selectedDie, setSelectedDie] = useState(-1);
   const [selectedSquare, setSelectedSquare] = useState(-1);
+  const gridSize = 9;
   const defaultPlayedDice = [
     { x: -1, y: -1 },
     { x: -1, y: -1 },
@@ -20,108 +21,7 @@ export default function Page() {
     { x: -1, y: -1 },
   ];
   const [playedDice, setPlayedDice] = useState(defaultPlayedDice);
-  const defaultPlayedSquares = [
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-    [
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-      { idx: -1, val: "" },
-    ],
-  ];
-  const [playedSquares, setPlayedSquares] = useState(defaultPlayedSquares);
+  const [playedSquares, setPlayedSquares] = useState(DefaultPlayedSquares());
   function GetNewDiceValues() {
     let NewCurDice = [];
     for (let i = 0; i < 12; i++) {
@@ -130,10 +30,20 @@ export default function Page() {
     }
     return NewCurDice;
   }
+  function DefaultPlayedSquares() {
+    let NewGridVals = [];
+    for (let i = 0; i < gridSize; i++) {
+      NewGridVals[i] = [];
+      for (let j = 0; j < gridSize; j++) {
+        NewGridVals[i][j] = { idx: -1, val: "" };
+      }
+    }
+    return NewGridVals;
+  }
   function ClearBoard() {
     setSelectedDie(-1);
     setPlayedDice(defaultPlayedDice);
-    setPlayedSquares(defaultPlayedSquares);
+    setPlayedSquares(DefaultPlayedSquares());
   }
   function StartRestartGame() {
     setCurDice(GetNewDiceValues());
@@ -208,12 +118,12 @@ export default function Page() {
     return playedDice[diceIdx].x >= 0 && playedDice[diceIdx].y >= 0;
   }
   function CanShift(x, y) {
-    let MinX = 9;
+    let MinX = gridSize;
     let MaxX = -1;
-    let MinY = 9;
+    let MinY = gridSize;
     let MaxY = -1;
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
         if (playedSquares[i][j].idx >= 0) {
           if (i < MinX) {
             MinX = i;
@@ -230,13 +140,18 @@ export default function Page() {
         }
       }
     }
-    return MinX + x >= 0 && MaxX + x < 9 && MinY + y >= 0 && MaxY + y < 9;
+    return (
+      MinX + x >= 0 &&
+      MaxX + x < gridSize &&
+      MinY + y >= 0 &&
+      MaxY + y < gridSize
+    );
   }
   function ShiftLetters(x, y) {
-    let TmpSquares = JSON.parse(JSON.stringify(defaultPlayedSquares));
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (i - x >= 0 && i - x < 9 && j - y >= 0 && j - y < 9) {
+    let TmpSquares = JSON.parse(JSON.stringify(DefaultPlayedSquares()));
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        if (i - x >= 0 && i - x < gridSize && j - y >= 0 && j - y < gridSize) {
           TmpSquares[i][j].idx = playedSquares[i - x][j - y].idx;
           TmpSquares[i][j].val = playedSquares[i - x][j - y].val;
         }
@@ -333,6 +248,7 @@ export default function Page() {
       </>
     );
   }
+  // TODO: Dynamically create based on grid size.
   function Board() {
     return (
       <>
@@ -443,6 +359,23 @@ export default function Page() {
   return (
     <section>
       <h1>Q-Less</h1>
+      <h3>About</h3>
+      To practice/learn React, I recreated one of my favorite word games,
+      Q-Less. Check out the repository&nbsp;
+      <a target="_blank" href="https://github.com/JSchoenbachler/Q-LessReact">
+        here.
+      </a>
+      <br />
+      <b>
+        DISCLAIMER: I am merely a fan of Q-Less, and do not own it in any way,
+        shape or form. If you enjoy the game, please consider purchasing
+        it&nbsp;
+        <a target="_blank" href="https://qlessgame.com/">
+          here.
+        </a>
+      </b>
+      <br />
+      <br />
       <h3>Rules</h3>
       <div>
         <ul>
